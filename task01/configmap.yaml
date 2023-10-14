@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: myconfigmap
+data:
+  mtport: '8081'
+  index.html: |
+    My web site 1
+    My web site 2
+    My web site 3
