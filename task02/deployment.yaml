@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mydeployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html/index.html
+          subPath: index.html
+          name: myweb
+        ports:
+        - containerPort: 80
+      volumes:
+      - name: myweb
+        configMap:
+          name: myconfigmap
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myservice
+spec:
+  selector:
+    app: myapp
+  ports:
+  - name: web
+    port: 80
+    targetPort: 80
